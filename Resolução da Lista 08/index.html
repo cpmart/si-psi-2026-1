@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Notifier</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    #msg p { background: #eef; padding: 10px; border-left: 5px solid #88f; }
+    #notify { padding: 10px; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <input type="button" id="notify" value="Notificação em 5 segundos" />
+  <div id="msg"></div>
+  <script>
+    const btn = document.getElementById("notify");
+    btn.onclick = () => {
+      btn.disabled = true;
+      notify("Você será notificado em 5 segundos…");
+      setTimeout(() => {
+        notify("✅ Ok! Notificação recebida.");
+        btn.disabled = false;
+      }, 5000);
+    };
+    function notify(text) {
+      const p = document.createElement("p");
+      p.textContent = text;
+      document.getElementById("msg").appendChild(p);
+      titleFlick();
+    }
+    function titleFlick() {
+      if (document.hasFocus()) {
+        document.title = "Notifier";
+        return;
+      }
+      document.title = document.title === "Notifier" ? "*** Notifier" : "Notifier";
+      setTimeout(titleFlick, 250); // Chama recursivamente enquanto fora de foco
+    }
+  </script>
+</body>
+</html>
